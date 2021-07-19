@@ -1,7 +1,10 @@
 import Table from "react-bootstrap/Table";
+import PokemonContext from "../PokemonContext";
 import PokemonRow from "./PokemonRow";
+import { useContext } from "react";
 
-export default function PokemonTable({ pokemons, filter, setSelectedPokemon }) {
+export default function PokemonTable() {
+  const { pokemons, filter, setSelectedPokemon } = useContext(PokemonContext);
   return (
     <Table borderless hover size="sm">
       <thead>
