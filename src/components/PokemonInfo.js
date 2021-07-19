@@ -1,13 +1,24 @@
 import Card from "react-bootstrap/Card";
+import PokemonContext from "../PokemonContext";
+import { useContext } from "react";
 
-export default function PokemonInfo({ name, base }) {
-  return (
+export default function PokemonInfo() {
+  const { selectedPokemon: selected } = useContext(PokemonContext);
+
+  // const {
+  //   selectedPokemon: {
+  //     name: { english },
+  //     base,
+  //   },
+  // } = useContext(PokemonContext);
+
+  return selected != null ? (
     <Card>
-      <Card.Header>{name.english}</Card.Header>
+      <Card.Header>{selected.name.english}</Card.Header>
       <Card.Body>
         <table>
           <tbody>
-            {Object.entries(base).map(([key, value]) => (
+            {Object.entries(selected.base).map(([key, value]) => (
               <tr key={key}>
                 <td>{key}</td>
                 <td>{value}</td>
@@ -17,5 +28,5 @@ export default function PokemonInfo({ name, base }) {
         </table>
       </Card.Body>
     </Card>
-  );
+  ) : null;
 }
