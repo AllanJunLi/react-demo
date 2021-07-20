@@ -3,14 +3,9 @@ import PokemonContext from "../PokemonContext";
 import { useContext } from "react";
 
 export default function PokemonInfo() {
-  const { selectedPokemon: selected } = useContext(PokemonContext);
-
-  // const {
-  //   selectedPokemon: {
-  //     name: { english },
-  //     base,
-  //   },
-  // } = useContext(PokemonContext);
+  const {
+    state: { selectedPokemon: selected },
+  } = useContext(PokemonContext);
 
   return selected != null ? (
     <Card>

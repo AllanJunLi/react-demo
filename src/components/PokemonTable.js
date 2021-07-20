@@ -2,9 +2,14 @@ import Table from "react-bootstrap/Table";
 import PokemonContext from "../PokemonContext";
 import PokemonRow from "./PokemonRow";
 import { useContext } from "react";
+import { ACTION } from "../App";
 
 export default function PokemonTable() {
-  const { pokemons, filter, setSelectedPokemon } = useContext(PokemonContext);
+  const {
+    state: { pokemons, filter },
+    dispatch,
+  } = useContext(PokemonContext);
+
   return (
     <Table borderless hover size="sm">
       <thead>
@@ -23,7 +28,9 @@ export default function PokemonTable() {
             <PokemonRow
               key={pokemon.id}
               pokemon={pokemon}
-              onSelect={(pokemon) => setSelectedPokemon(pokemon)}
+              onSelect={(pokemon) =>
+                dispatch({ type: ACTION.SELECT_POKEMON, payload: pokemon })
+              }
             />
           ))}
       </tbody>
