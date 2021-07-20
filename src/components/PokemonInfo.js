@@ -1,8 +1,8 @@
 import Card from "react-bootstrap/Card";
-import { useSelector } from "react-redux";
+import useStore from "./../store";
 
 export default function PokemonInfo() {
-  const selected = useSelector((state) => state.selectedPokemon);
+  const selected = useStore((state) => state.selectedPokemon);
 
   return selected != null ? (
     <Card>

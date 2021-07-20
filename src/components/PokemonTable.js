@@ -1,12 +1,11 @@
 import Table from "react-bootstrap/Table";
 import PokemonRow from "./PokemonRow";
-import { useDispatch, useSelector } from "react-redux";
-import { ACTION } from "../App";
+import useStore from "./../store";
 
 export default function PokemonTable() {
-  const dispatch = useDispatch();
-  const pokemons = useSelector((state) => state.pokemons);
-  const filter = useSelector((state) => state.filter);
+  const pokemons = useStore((state) => state.pokemons);
+  const filter = useStore((state) => state.filter);
+  const setSelectedPokemon = useStore((state) => state.setSelectedPokemon);
 
   return (
     <Table borderless hover size="sm">
@@ -26,9 +25,7 @@ export default function PokemonTable() {
             <PokemonRow
               key={pokemon.id}
               pokemon={pokemon}
-              onSelect={(pokemon) =>
-                dispatch({ type: ACTION.SELECT_POKEMON, payload: pokemon })
-              }
+              onSelect={setSelectedPokemon}
             />
           ))}
       </tbody>
