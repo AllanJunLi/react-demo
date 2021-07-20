@@ -1,10 +1,11 @@
-import { useEffect, useReducer } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PokemonInfo from "./components/PokemonInfo";
 import PokemonTable from "./components/PokemonTable";
 import PokemonFilter from "./components/PokemonFilter";
-import PokemonContext from "./PokemonContext";
+import { createStore } from "redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 
 export const ACTION = {
   SET_FILTER: "setFilter",
@@ -12,7 +13,10 @@ export const ACTION = {
   SELECT_POKEMON: "selectPokemon",
 };
 
-const pokemonReducer = (state, action) => {
+const pokemonReducer = (
+  state = { filter: "", pokemons: [], selectedPokemon: null },
+  action
+) => {
   switch (action.type) {
     case ACTION.SET_FILTER:
       return { ...state, filter: action.payload };
@@ -25,12 +29,12 @@ const pokemonReducer = (state, action) => {
   }
 };
 
+// redux store
+const store = createStore(pokemonReducer);
+
 function App() {
-  const [state, dispatch] = useReducer(pokemonReducer, {
-    pokemons: [],
-    filter: "",
-    selectedPokemon: null,
-  });
+  const dispatch = useDispatch();
+  const pokemons = useSelector((state) => state.pokemons);
 
   useEffect(() => {
     fetch("http://localhost:3000/pokemon.json")
@@ -38,25 +42,27 @@ function App() {
       .then((data) => dispatch({ type: ACTION.SET_POKEMONS, payload: data }));
   }, []);
 
-  if (!state.pokemons) {
+  if (!pokemons) {
     return <div>Loading ...</div>;
   }
 
   return (
-    <PokemonContext.Provider value={{ state, dispatch }}>
-      <div className="container">
-        <h1>Pokemon Search</h1>
+    <div className="container">
+      <h1>Pokemon Search</h1>
 
-        <div className="twoColumnLayout">
-          <div>
-            <PokemonFilter />
-            <PokemonTable />
-          </div>
-          <PokemonInfo />
+      <div className="twoColumnLayout">
+        <div>
+          <PokemonFilter />
+          <PokemonTable />
         </div>
+        <PokemonInfo />
       </div>
-    </PokemonContext.Provider>
+    </div>
   );
 }
 
-export default App;
+export default () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);

@@ -1,14 +1,12 @@
 import Table from "react-bootstrap/Table";
-import PokemonContext from "../PokemonContext";
 import PokemonRow from "./PokemonRow";
-import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ACTION } from "../App";
 
 export default function PokemonTable() {
-  const {
-    state: { pokemons, filter },
-    dispatch,
-  } = useContext(PokemonContext);
+  const dispatch = useDispatch();
+  const pokemons = useSelector((state) => state.pokemons);
+  const filter = useSelector((state) => state.filter);
 
   return (
     <Table borderless hover size="sm">

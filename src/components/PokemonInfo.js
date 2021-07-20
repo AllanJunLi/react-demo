@@ -1,11 +1,8 @@
 import Card from "react-bootstrap/Card";
-import PokemonContext from "../PokemonContext";
-import { useContext } from "react";
+import { useSelector } from "react-redux";
 
 export default function PokemonInfo() {
-  const {
-    state: { selectedPokemon: selected },
-  } = useContext(PokemonContext);
+  const selected = useSelector((state) => state.selectedPokemon);
 
   return selected != null ? (
     <Card>

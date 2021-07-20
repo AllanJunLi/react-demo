@@ -1,12 +1,10 @@
-import PokemonContext from "../PokemonContext";
-import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ACTION } from "../App";
 
 export default function PokemonFilter() {
-  const {
-    state: { filter },
-    dispatch,
-  } = useContext(PokemonContext);
+  const dispatch = useDispatch();
+  const filter = useSelector((state) => state.filter);
+
   return (
     <input
       className="filterInput"
