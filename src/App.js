@@ -30,7 +30,10 @@ const pokemonReducer = (
 };
 
 // redux store
-const store = createStore(pokemonReducer);
+const store = createStore(
+  pokemonReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 function App() {
   const dispatch = useDispatch();
